@@ -18,7 +18,7 @@ class CitiesController extends Controller
     public function index()
     {
         $cities = City::paginate(10);
-        return view('admin.cities.index', compact('cities'));
+        return view('admin.cidades.index', compact('cities'));
     }
 
     /**
@@ -30,10 +30,10 @@ class CitiesController extends Controller
     {
         $form = \FormBuilder::create(CityForm::class, [
             'method' => 'POST',
-            'url' => route('admin.cities.store')
+            'url' => route('admin.cidades.store')
         ]);
         $title = "Nova cidade";
-        return view('admin.cities.save', compact('form', 'title'));
+        return view('admin.cidades.save', compact('form', 'title'));
     }
 
     /**
@@ -46,7 +46,7 @@ class CitiesController extends Controller
     {
         $form = $formBuilder->create(CityForm::class);
         City::create($form->getFieldValues());
-        return redirect()->route('admin.cities.index');
+        return redirect()->route('admin.cidades.index');
     }
 
     /**
@@ -68,7 +68,13 @@ class CitiesController extends Controller
      */
     public function edit(City $city)
     {
-        //
+        $form = \FormBuilder::create(CityForm::class, [
+            'method' => 'PUT',
+            'url' => route('admin.cidades.update', ['id' => $city->id]),
+            'model' => $city
+        ]);
+        $title = "Editar cidade";
+        return view('admin.cidades.save', compact('form', 'title'));
     }
 
     /**
@@ -78,9 +84,12 @@ class CitiesController extends Controller
      * @param  \App\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, City $city)
+    public function update(FormBuilder $formBuilder, City $city)
     {
-        //
+        $form = $formBuilder->create(CityForm::class);
+        $city->fill($form->getFieldValues());
+        $city->save();
+        return redirect()->route('admin.cidades.index');
     }
 
     /**
@@ -91,6 +100,7 @@ class CitiesController extends Controller
      */
     public function destroy(City $city)
     {
-        //
+        $city->delete();
+        return redirect()->route('admin.cidades.index');
     }
 }

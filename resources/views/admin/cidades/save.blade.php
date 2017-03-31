@@ -11,7 +11,7 @@
                     <?php $form->add('submit', 'submit',[
                         'label' => '<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>'
                     ]) ?>
-                    {{!! form($form) !!}}
+                    {!! form($form) !!}
                 </div>
             </div>
         </div>

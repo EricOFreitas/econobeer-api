@@ -20,5 +20,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 
 Route::group(['middleware' => 'auth', 'as' => 'admin.', 'prefix' => 'admin'], function(){
-    Route::resource('cities', 'Admin\CitiesController');
+    Route::resource('cidades', 'Admin\CitiesController');
+    Route::resource('marcas', 'Admin\BrandsController');
+    Route::resource('tipos', 'Admin\TypesController');
+    //Route::resource('estoques', 'Admin\StocksController');
 });
